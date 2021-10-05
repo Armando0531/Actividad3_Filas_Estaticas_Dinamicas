@@ -1,0 +1,29 @@
+
+
+class Impresion{
+	private int indentificador;
+	private double tamaño;
+	private int numeroHojas;
+	public Impresion(int indentificador, double tamaño, int numeroHojas) {
+		super();
+		this.indentificador = indentificador;
+		this.tamaño =tamaño;
+		this.numeroHojas = numeroHojas;
+	}
+	@Override
+	public String toString() {
+		return "Impresion [indentificador=" + indentificador + ", tamaño=" + tamaño + ", numeroHojas=" + numeroHojas
+				+ "]";
+	}
+	
+}
+
+
+public class PruebaFilas {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
