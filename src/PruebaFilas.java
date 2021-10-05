@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 interface RegistroImpresiones{
 	
@@ -26,7 +28,7 @@ class Impresion{
 	public int getIdentificador() {
 		return identificador;
 	}
-	public void setId(int identificador) {
+	public void setIdentificador(int identificador) {
 		this.identificador = identificador;
 	}
 	public int getTamaño() {
@@ -154,6 +156,89 @@ class ImplementacionFilaEstatica implements RegistroImpresiones{
 
 }
 
+class ImplementacionFilaDinamica implements RegistroImpresiones{
+	private Queue<Impresion> registro = new LinkedList<Impresion>();
+
+	public Queue<Impresion> getRegistro() {
+		return registro;
+	}
+	public void setRegistro(Queue<Impresion> registro) {
+		this.registro = registro;
+	}
+	
+	@Override
+	public boolean filaLlena() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void insertar(Impresion impresion) {
+		Queue<Impresion> registro=this.getRegistro();
+		registro.add(impresion);
+		this.setRegistro(registro);
+	}
+	@Override
+	public boolean filaVacia() {
+		Queue<Impresion> registro=this.getRegistro();
+		if (registro.isEmpty()) {
+			System.out.println("fila vacia");
+		}
+		return registro.isEmpty();
+	}
+	@Override
+	public Impresion sacar() {
+		if (this.filaVacia()) {
+			return null;
+		}else {
+			Queue<Impresion> registro=this.getRegistro();
+			return registro.poll();
+		}
+	}
+	@Override
+	public void mostrarFrente() {
+		if (this.filaVacia()) {
+		}else {
+			Queue<Impresion> registro=this.getRegistro();
+			Impresion frente = registro.peek();
+			System.out.println(frente);
+		}
+	}
+	@Override
+	public void totalImpresas() {
+		Queue<Impresion> reg=this.getRegistro();
+		int sum=0;
+		if(this.filaVacia()) {
+		}else {
+			for (int i=0;i<reg.size();i++) {
+				Impresion tmp = reg.poll();
+				sum+=tmp.getNumeroHojas();
+				reg.add(tmp);
+			}
+		}
+		System.out.println("Total de hojas impresas: "+sum);
+	}
+	@Override
+	public void totalBytes() {
+		Queue<Impresion> reg=this.getRegistro();
+		int sum=0;
+		if(this.filaVacia()) {
+		}else {
+			for (int i=0;i<reg.size();i++) {
+				Impresion tmp = reg.poll();
+				sum+=tmp.getTamaño();
+				reg.add(tmp);
+			}
+		}
+		System.out.println("Total de bytes recibidos: "+sum);
+	}
+	
+	@Override
+	public String toString() {
+		return "ImplementacionFilaDinamica [registro=" + registro + "]";
+	}
+	
+	
+}
 
 public class PruebaFilas {
 
@@ -163,6 +248,8 @@ public class PruebaFilas {
 		System.out.println(i1);
 		Impresion i2 = new Impresion(10,15,58);
 		System.out.println(i2);
+		Impresion i3 = new Impresion(10,20,30);
+		System.out.println(i3);
 		ImplementacionFilaEstatica ife1 = new ImplementacionFilaEstatica(2);
 		ife1.insertar(i1);
 		ife1.insertar(i2);
@@ -172,6 +259,21 @@ public class PruebaFilas {
 		ife1.sacar();
 		System.out.println(ife1);
 		ife1.sacar();
+		
+		ImplementacionFilaDinamica ifd1 = new ImplementacionFilaDinamica();
+
+		ifd1.insertar(i1);
+		ifd1.insertar(i2);
+		ifd1.insertar(i3);
+		ifd1.totalBytes();
+		ifd1.totalImpresas();
+
+		System.out.println(ifd1);
+		ifd1.sacar();
+		System.out.println(ifd1);
+		ifd1.sacar();
+		System.out.println(ifd1);
+		ifd1.sacar();
 
 	}
 
